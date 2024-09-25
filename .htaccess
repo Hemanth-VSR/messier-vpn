@@ -1,0 +1,18 @@
+RewriteEngine On
+
+# Block access to .git directory
+RewriteRule ^(.*/)?\.git/ - [F,L]
+
+# Remove .php extension
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.php -f
+RewriteRule ^(.*)$ $1.php [L]
+
+# Optionally, redirect .php URLs to clean URLs if it comes .php through page not found
+RewriteCond %{THE_REQUEST} "^[^ ]* .*?\.php[? ]"
+RewriteRule ^(.*)\.php$ /$1 [L,R=301]
+
+# This rule is to redirect all incorrect url to _404.php file.
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^.*$ /_404.php [L]
