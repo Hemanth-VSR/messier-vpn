@@ -9,7 +9,7 @@ class RestAPI{
         $this->inputs_();
     }
 
-    private function get_status_detail($code){
+    private static function get_status_detail($code){
         $status = array(
             100 => 'Continue',
             101 => 'Switching Protocols',
@@ -100,15 +100,17 @@ class RestAPI{
         return $clean_input;
     }
 
-    public function response_($response, $status_code){
+    protected static function response_($response, $status_code){
         header('Content-Type: application/json');
         try{
             http_response_code($status_code);
-            echo json_encode(array("BF" => $response, "Status Name" => $this->get_status_detail($status_code)));
+            echo json_encode(array("BF" => $response, "Status Name" => RestAPI::get_status_detail($status_code)));
         } catch(Exception $e){
             echo json_encode(array("Message" => "Something gone wrong!"));
         }
-        
     }
+
+
+
 
 }

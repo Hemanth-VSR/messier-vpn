@@ -14,7 +14,7 @@ class get_peers extends RestAPI{
             $this->filter_bf($peer);
             
             if (isset($this->peer , $this->AllowedIPs , $this->Endpoint , $this->LatestHandshake , $this->TransferReceived , $this->TransferSent)){
-                $this->response_([
+                RestAPI::response_([
                     "Peer" => $this->peer,
                     "Allowed IPs" => $this->AllowedIPs,
                     "Latest Handshake" => $this->LatestHandshake,
@@ -24,7 +24,7 @@ class get_peers extends RestAPI{
                 ], 200);
             }
         } catch (Exception $e){
-            $this->response_(array("Message" => $e->getMessage()), 400);
+            RestAPI::response_(array("Message" => $e->getMessage()), 400);
         }
     }
 
