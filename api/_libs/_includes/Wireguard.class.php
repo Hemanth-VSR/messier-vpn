@@ -17,4 +17,8 @@ class Wireguard extends RestAPI{
     public static function addPeers(){
         $result_ = shell_exec("wg set wg0 peer $public_key allowed-ips $allowed_ips");
     }
+
+    public static function removePeers(){
+        $result_ = shell_exec("wg set wg0 peer $public_key remove");
+    }
 }
