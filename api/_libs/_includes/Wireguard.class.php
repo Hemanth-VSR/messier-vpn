@@ -19,7 +19,7 @@ class Wireguard extends RestAPI{
             if (Wireguard::public_key_not_alloc($public_key) === false){
                 $result_ = shell_exec("sudo wg set wg0 peer $public_key allowed-ips $allowed_ips/32 2>&1 && echo $?");
                 if ($result_ == 0){
-                    // $re = Database::DbConnection()->query("UPDATE `ip_pool` set ");
+                    $re = Database::DbConnection()->query("INSERT INTO `ip_pool` (`c_id`, `public_key`, `ipaddress`) VALUES ('1', '$public_key', '$allowed_ips');");
                     return true;
                 } else {
                     return $result_;
