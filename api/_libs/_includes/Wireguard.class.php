@@ -4,6 +4,8 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/api/_libs/_includes/REST.class.php';
 
 class Wireguard extends RestAPI{
 
+    public static $ip = null;
+
     public static function getPeers($public_key){
         $result_ = shell_exec("sudo wg | grep -A4 $public_key | sed '/^$/,/^$/d'");
         if (isset($result_) and !is_null($result_)){
@@ -25,7 +27,8 @@ class Wireguard extends RestAPI{
                     return $result_;
                 }
             } else {
-                return "Public key is already exist!";
+                $ip = Wireguard::$ip;
+                return "Public key is already allocated to $ip!";
             }
             
         } catch (Exception $e){
@@ -34,12 +37,19 @@ class Wireguard extends RestAPI{
     }
 
     public static function public_key_not_alloc($public_key){
-        $re = Database::DbConnection()->query("SELECT COUNT(*) as count FROM `ip_pool` WHERE `public_key` = '$public_key';");
-        if ($re->fetch_assoc()['count'] == 1){
-            return true;
-        } else {
-            return false;
+        try{
+            $re = Database::DbConnection()->query("SELECT COUNT(*) as count, `ipaddress` FROM `ip_pool` WHERE `public_key` = '$public_key' GROUP BY `ipaddress`;");
+            $row = $re->fetch_assoc();
+            if ($row['count'] >= 1){
+                Wireguard::$ip = $row['ipaddress'];
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception $e){
+            return RestAPI::response_(array($e->getMessage()), 400);
         }
+        
     }
 
     public static function removePeers($public_key){
