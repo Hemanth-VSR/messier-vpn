@@ -53,6 +53,15 @@ class Wireguard extends RestAPI{
     }
 
     public static function removePeers($public_key){
-        $result_ = shell_exec("sudo wg set wg0 peer $public_key remove");
+        $result_ = shell_exec("sudo wg set wg0 peer $public_key remove 2>&1 && echo $?");
+        if ($result_ == 0){
+            $re = Database::DbConnection()->query("UPDATE `ip_pool` set `public_key` = '0', `ipaddress` = '0' WHERE `public_key` = '$public_key';");
+            $isAffected = mysqli_affected_rows(Database::DbConnection());
+            if ($isAffected == 1){
+                return true;
+            } else {
+                return "Public key '$public_key' already affected or removed!";
+            }
+        }
     }
 }
