@@ -20,6 +20,5 @@
             "celestial-vpn\\wireguard\\": "src/"
         }
     },
-    "minimum-stability": "dev",
-    "version": "0.0.1"
+    "minimum-stability": "stable"
 }
