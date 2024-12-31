@@ -1,6 +1,6 @@
 <?php
 
-include $_SERVER['DOCUMENT_ROOT']."/api/_libs/autoload.php";
+include "../_libs/autoload.php";
 
 class remove_peers extends RestAPI{
 

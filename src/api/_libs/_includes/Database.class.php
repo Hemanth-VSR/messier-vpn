@@ -41,12 +41,13 @@ class Database{
     * @return type string or boolean
     */
     private static function get_config($request = false){
-        $value = file_get_contents("/var/www/config/bfvpn.config.json");     /* -- This file path may changes if you are working on different production environment -- */
+
+        /** This file location contains the database settings of the library */
+        $value = file_get_contents("../../settings.json");
         if ($decoded_ = json_decode($value , true)){
             if (isset($decoded_[$request])){
                 return $decoded_[$request];
-            }
-            else {
+            } else {
                 return "Requested Resource [$request] unavailable!\n";
             }
         }

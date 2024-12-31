@@ -1,6 +1,6 @@
 <?php
 
-include $_SERVER['DOCUMENT_ROOT']."/api/_libs/autoload.php";
+include "../_libs/autoload.php";
 
 class add_peers extends RestAPI{
 
@@ -21,10 +21,11 @@ class add_peers extends RestAPI{
             ], 200);
         } else {
             RestAPI::response_(array("Message" => $end__), 400);
-        }
+        } 
     }
 
     public function getAllocatedIPAddress(){
+        print_r($this->db);
         $ipadd = array();
         $database = $this->db->query("SELECT `ipaddress` FROM `ip_pool`");
         if ($database->num_rows > 0){
@@ -70,5 +71,9 @@ class add_peers extends RestAPI{
 
 }
 
-$a = new add_peers($_POST['public_key']);
-$a->valid_();
+if ($a_ = Celestial::checkIF()){
+    throw new Exception($a_ ." ". "Cannot handle Celestial API's");
+} else {
+    $a = new add_peers($_POST['public_key']);
+    $a->valid_();
+}
