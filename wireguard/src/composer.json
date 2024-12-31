@@ -9,10 +9,17 @@
             "email": "hemanthsubramani123@gmail.com"
         }
     ],
+    
     "autoload": {
         "psr-4": {
             "celestial-vpn\\wireguard\\": "src/"
         }
     },
-    "require": {}
+
+    "require": {
+        "php": ">=7.0.0"
+    },
+    "version": "1.0.0",
+    "minimum-stability": "dev"
+    
 }
