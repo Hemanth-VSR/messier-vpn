@@ -1,6 +1,6 @@
 {
-    "name": "brownee-vpn/wireguard",
-    "description": "Efficient API Library for Wireguard VPN Peers",
+    "name": "messier-vpn/wireguard",
+    "description": "Powerfull API Library for Wireguard VPN Peers Control",
     "type": "library",
     "license": "BSD-3-Clause",
     "authors": [
@@ -12,7 +12,7 @@
     
     "autoload": {
         "psr-4": {
-            "celestial-vpn\\wireguard\\": "src/"
+            "messier-vpn\\wireguard\\": "src/"
         }
     },
 
